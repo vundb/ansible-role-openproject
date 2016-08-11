@@ -1,0 +1,17 @@
+#
+# MySQL access information.
+#
+openproject_mysql:
+  host: localhost
+  user: openproject
+  pass: openproject
+  name: openproject
+
+#
+# Custom apache options to be pass as env-values when starting apache service.
+#
+# Avaiable opts:
+#   - PHP
+#   - PASSENGER
+#
+apache_opts: ["PASSENGER"]

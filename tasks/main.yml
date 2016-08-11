@@ -1,0 +1,24 @@
+---
+
+# fail when distribution is not supported
+
+- name: check if distribution is supported
+  fail: msg="'{{ ansible_distribution }}' is not supported by this role"
+  when: ansible_distribution not in ["Gentoo"]
+
+
+# prepare system for further setup steps
+
+- name: create openproject system group
+  become: yes
+  group: name="{{ openproject_group }}"
+
+- name: create openproject system user
+  become: yes
+  user: name="{{ openproject_user }}" home="/home/openproject" shell="/bin/bash"
+
+
+# run os specific tasks
+
+- include: gentoo/main.yml
+  when: ansible_distribution == "Gentoo"

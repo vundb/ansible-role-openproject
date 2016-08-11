@@ -1,0 +1,9 @@
+#
+# Openproject system group.
+#
+openproject_group: openproject
+
+#
+# Openproject system user.
+#
+openproject_user: openproject
