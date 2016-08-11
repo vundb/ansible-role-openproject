@@ -15,6 +15,7 @@ dependencies:
       - { package: "dev-lang/ruby" }
       - { package: "net-misc/openssh" }
       - { package: "net-libs/nodejs" }
+      - { package: "www-apache/passenger" }
   - role: mysql
   - role: mysql-admin
     mysql_databases:
@@ -24,3 +25,4 @@ dependencies:
         pass: "{{ openproject_mysql.pass }}"
         priv: "{{ openproject_mysql.name }}.*:ALL"
   - role: apache
+    apache_opts: ["PASSANGER"]
