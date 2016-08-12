@@ -7,6 +7,7 @@ openproject_mysql:
   pass: openproject
   name: openproject
 
+
 #
 # Custom apache options to be pass as env-values when starting apache service.
 #
@@ -15,3 +16,14 @@ openproject_mysql:
 #   - PASSENGER
 #
 apache_opts: ["PASSENGER"]
+
+#
+# Configuration parameters used for production envrionment.
+# Use simple key value storage.
+#
+# Example
+#   openproject_config_production
+#     email_delivery_method: :smtp
+#     smtp_address: "smtp.example.com"
+#
+openproject_config_production: []

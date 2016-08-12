@@ -7,6 +7,10 @@ dependencies:
         file: "openproject"
         entries:
           - ">=dev-libs/openssl-1.0.2d -bindist"
+      - section: "package.use"
+        file: "openproject"
+        entries:
+          - "dev-vcs/git -perl -gpg -webdav"
     portage_packages:
       - { package: "media-gfx/imagemagick" }
       - { package: "dev-vcs/git" }
@@ -25,4 +29,4 @@ dependencies:
         pass: "{{ openproject_mysql.pass }}"
         priv: "{{ openproject_mysql.name }}.*:ALL"
   - role: apache
-    apache_opts: ["PASSANGER"]
+    apache_opts: ["PASSENGER"]

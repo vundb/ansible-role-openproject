@@ -7,3 +7,16 @@ openproject_group: openproject
 # Openproject system user.
 #
 openproject_user: openproject
+
+
+#
+# Github repository and version to be used for installation.
+#
+openproject_git:
+  repository: 'https://github.com/opf/openproject-ce.git'
+  version:    'stable/6'
+
+#
+# Secret used for production instance.
+#
+openproject_secret: '749791453655d3e3ae9e9a4c10ac98d3cdab117b3790d3aceb6aceed48a4f0934d5996686eeeb6d465141eaf061c97a29e68b9dc52f099c19863dfeeeee9bcd8'
