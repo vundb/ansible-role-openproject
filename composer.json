@@ -11,10 +11,7 @@
   ],
   "require": {
     "composer/installers": "~1.0",
-    "vundb/ansible-role-portage": "1.0.*",
-    "vundb/ansible-role-mysql": "1.0.*",
-    "vundb/ansible-role-mysql-admin": "1.0.*",
-    "vundb/ansible-role-apache": "1.0.*"
+    "vundb/ansible-role-portage": "1.0.*"
   },
   "extra": {
     "installer-name": "openproject",

@@ -9,15 +9,6 @@ openproject_mysql:
 
 
 #
-# Custom apache options to be pass as env-values when starting apache service.
-#
-# Avaiable opts:
-#   - PHP
-#   - PASSENGER
-#
-apache_opts: ["PASSENGER"]
-
-#
 # Configuration parameters used for production envrionment.
 # Use simple key value storage.
 #

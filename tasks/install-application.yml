@@ -1,0 +1,35 @@
+---
+
+- name: ensure application directory exists
+  become: yes
+  file: path="/home/openproject/application" state="directory" owner="{{ openproject_user }}" group="{{ openproject_group }}"
+
+- name: checkout git repository
+  become: yes
+  become_user: "{{ openproject_user }}"
+  git: repo="{{ openproject_git.repository }}"
+      version="{{ openproject_git.version }}"
+      dest="/home/openproject/application"
+      accept_hostkey=yes
+      force=yes
+
+- name: command - gem install bundler
+  become: yes
+  become_user: "{{ openproject_user }}"
+  command: >
+    gem install bundler
+    chdir=/home/openproject/application
+
+- name: command - bundle install
+  become: yes
+  become_user: "{{ openproject_user }}"
+  command: >
+    ./bin/bundle install --deployment --without postgres sqlite development test therubyracer docker
+    chdir=/home/openproject/application
+
+- name: command - npm install
+  become: yes
+  become_user: "{{ openproject_user }}"
+  command: >
+    npm install
+    chdir=/home/openproject/application

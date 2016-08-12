@@ -1,0 +1,23 @@
+---
+
+- name: execute some post commands with rake
+  become: yes
+  become_user: '{{ openproject_user }}'
+  command: >
+    {{ item }}
+    chdir=/home/openproject/application
+  with_items:
+    - './bin/rake db:create'
+    - './bin/rake db:migrate'
+    - './bin/rake db:seed'
+    - './bin/rake assets:precompile'
+  environment:
+    RAILS_ENV: 'production'
+    LOCALE: 'de'
+
+- name: create cronjob for background tasks
+  become: yes
+  cron: name="openproject worker"
+        minute="*/1"
+        job="cd /home/openproject/application; ./bin/rake jobs:workoff"
+        user="{{ openproject_user }}"

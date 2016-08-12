@@ -1,21 +1,21 @@
 ---
 
-# fail when distribution is not supported
+## fail when distribution is not supported
+#
+#- name: check if distribution is supported
+#  fail: msg="'{{ ansible_distribution }}' is not supported by this role"
+#  when: ansible_distribution not in ["Gentoo"]
 
-- name: check if distribution is supported
-  fail: msg="'{{ ansible_distribution }}' is not supported by this role"
-  when: ansible_distribution not in ["Gentoo"]
 
-
-# prepare system for further setup steps
-
-- name: create openproject system group
-  become: yes
-  group: name="{{ openproject_group }}"
-
-- name: create openproject system user
-  become: yes
-  user: name="{{ openproject_user }}" home="/home/openproject" shell="/bin/bash"
+## prepare system for further setup steps
+#
+#- name: create openproject system group
+#  become: yes
+#  group: name="{{ openproject_group }}"
+#
+#- name: create openproject system user
+#  become: yes
+#  user: name="{{ openproject_user }}" home="/home/openproject" shell="/bin/bash"
 
 
 # run os specific tasks
@@ -24,93 +24,16 @@
   when: ansible_distribution == "Gentoo"
 
 
-# install application
-
-- name: ensure application directory exists
-  become: yes
-  file: path="/home/openproject/application" state="directory" owner="{{ openproject_user }}" group="{{ openproject_group }}"
-
-- name: checkout git repository
-  become: yes
-  become_user: "{{ openproject_user }}"
-  git: repo="{{ openproject_git.repository }}"
-      version="{{ openproject_git.version }}"
-      dest="/home/openproject/application"
-      accept_hostkey=yes
-      force=yes
-
-- name: command - gem install bundler
-  become: yes
-  become_user: "{{ openproject_user }}"
-  command: >
-    gem install bundler
-    chdir=/home/openproject/application
-
-- name: command - bundle install
-  become: yes
-  become_user: "{{ openproject_user }}"
-  command: >
-    ./bin/bundle install --deployment --without postgres sqlite development test therubyracer docker
-    chdir=/home/openproject/application
-
-- name: command - npm install
-  become: yes
-  become_user: "{{ openproject_user }}"
-  command: >
-    npm install
-    chdir=/home/openproject/application
+## install application
+#
+#- include: install-application.yml
 
 
-# configure application
-
-- name: write database configuration file
-  become: yes
-  template: src='database.yml.j2'
-            dest='/home/openproject/application/config/database.yml'
-            owner='{{ openproject_user }}'
-            group='{{ openproject_group }}'
-            mode='0644'
-  notify: apache - restart
-
-- name: write common configuration file
-  become: yes
-  template: src='configuration.yml.j2'
-            dest='/home/openproject/application/config/configuration.yml'
-            owner='{{ openproject_user }}'
-            group='{{ openproject_group }}'
-            mode='0644'
-  notify: apache - restart
+## configure application
+#
+#- include: configure-application.yml
 
 
-# execute post tasks
-
-- name: execute some post commands with rake
-  become: yes
-  become_user: '{{ openproject_user }}'
-  command: >
-    {{ item }}
-    chdir=/home/openproject/application
-  with_items:
-    - './bin/rake db:create'
-    - './bin/rake db:migrate'
-    - './bin/rake db:seed'
-    - './bin/rake assets:precompile'
-  environment:
-    RAILS_ENV: 'production'
-    LOCALE: 'de'
-
-- name: write secrets file
-  become: yes
-  template: src="secrets.yml.j2"
-            dest="/home/openproject/application/config/secrets.yml"
-            owner="{{ openproject_user }}"
-            group="{{ openproject_group }}"
-            mode="0644"
-  notify: apache - restart
-
-- name: create cronjob for background tasks
-  become: yes
-  cron: name="openproject worker"
-        minute="*/1"
-        job="cd /home/openproject/application; ./bin/rake jobs:workoff"
-        user="{{ openproject_user }}"
+## execute post tasks
+#
+#- include: execute-post-tasks.yml

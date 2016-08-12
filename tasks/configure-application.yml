@@ -1,0 +1,28 @@
+---
+
+- name: write database configuration file
+  become: yes
+  template: src='database.yml.j2'
+            dest='/home/openproject/application/config/database.yml'
+            owner='{{ openproject_user }}'
+            group='{{ openproject_group }}'
+            mode='0644'
+  notify: apache - restart
+
+- name: write common configuration file
+  become: yes
+  template: src='configuration.yml.j2'
+            dest='/home/openproject/application/config/configuration.yml'
+            owner='{{ openproject_user }}'
+            group='{{ openproject_group }}'
+            mode='0644'
+  notify: apache - restart
+
+- name: write secrets file
+  become: yes
+  template: src="secrets.yml.j2"
+            dest="/home/openproject/application/config/secrets.yml"
+            owner="{{ openproject_user }}"
+            group="{{ openproject_group }}"
+            mode="0644"
+  notify: apache - restart

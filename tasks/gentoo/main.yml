@@ -1,5 +1,38 @@
 ---
 
+# install required packaages
+
+- include: ../../../portage/tasks/gentoo/main.yml
+  vars:
+    portage_configuration:
+      - section: "package.use"
+        file: "openproject"
+        entries:
+          - ">=dev-libs/openssl-1.0.2d -bindist"
+      - section: "package.use"
+        file: "git"
+        entries:
+          - "dev-vcs/git -perl -gpg -webdav"
+      - section: "package.accept_keywords"
+        file: "openproject"
+        entries:
+          - ">=www-apache/passenger-5.0.30 ~amd64"
+    portage_packages:
+      # openssl need to be reinstalled without bindist used when compiling ruby
+      - { package: "dev-libs/openssl" }
+      - { package: "net-misc/openssh" }
+      - { package: "media-gfx/imagemagick" }
+      # git need to be reinstalled with curl use flag
+      - { package: "dev-vcs/git" }
+      - { package: "net-misc/curl" }
+      - { package: "net-misc/memcached" }
+      - { package: "dev-lang/ruby" }
+      - { package: "net-libs/nodejs" }
+      - { package: "www-apache/passenger" }
+
+
+# ensure services are running
+
 - name: ensure memcache service is running
   become: yes
   service: name="memcached" state="restarted" enabled=yes
