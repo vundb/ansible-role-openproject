@@ -1,21 +1,21 @@
 ---
 
-## fail when distribution is not supported
-#
-#- name: check if distribution is supported
-#  fail: msg="'{{ ansible_distribution }}' is not supported by this role"
-#  when: ansible_distribution not in ["Gentoo"]
+# fail when distribution is not supported
+
+- name: check if distribution is supported
+  fail: msg="'{{ ansible_distribution }}' is not supported by this role"
+  when: ansible_distribution not in ["Gentoo"]
 
 
-## prepare system for further setup steps
-#
-#- name: create openproject system group
-#  become: yes
-#  group: name="{{ openproject_group }}"
-#
-#- name: create openproject system user
-#  become: yes
-#  user: name="{{ openproject_user }}" home="/home/openproject" shell="/bin/bash"
+# prepare system for further setup steps
+
+- name: create openproject system group
+  become: yes
+  group: name="{{ openproject_group }}"
+
+- name: create openproject system user
+  become: yes
+  user: name="{{ openproject_user }}" home="/home/openproject" shell="/bin/bash"
 
 
 # run os specific tasks
@@ -24,16 +24,16 @@
   when: ansible_distribution == "Gentoo"
 
 
-## install application
-#
-#- include: install-application.yml
+# install application
+
+- include: install-application.yml
 
 
-## configure application
-#
-#- include: configure-application.yml
+# configure application
+
+- include: configure-application.yml
 
 
-## execute post tasks
-#
-#- include: execute-post-tasks.yml
+# execute post tasks
+
+- include: execute-post-tasks.yml
