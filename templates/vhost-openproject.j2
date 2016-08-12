@@ -1,0 +1,23 @@
+SetEnv EXECJS_RUNTIME Disabled
+
+<VirtualHost {{ item.virtual_host | default('*:80') }}>
+  ServerName   {{ item.server_name }}
+  DocumentRoot {{ item.document_root }}
+  ServerAlias  {{ item.server_alias }}
+
+  <Directory {{ item.document_root }}>
+    # This relaxes Apache security settings.
+    AllowOverride all
+
+    # MultiViews must be turned off.
+    Options -MultiViews
+
+    # Uncomment this if you're on Apache >= 2.4:
+    Require all granted
+  </Directory>
+
+  ## Logging
+  ErrorLog /var/log/apache2/{{ item.server_name }}_error.log
+  ServerSignature Off
+  CustomLog /var/log/apache2/{{ item.server_name }}_access.log combined
+</VirtualHost>
