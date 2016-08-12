@@ -18,8 +18,7 @@
         entries:
           - ">=www-apache/passenger-5.0.30 ~amd64"
     portage_packages:
-      # openssl need to be reinstalled without bindist used when compiling ruby
-      - { package: "dev-libs/openssl" }
+      # openssl and openssh need to be reinstalled without bindist used when compiling ruby
       - { package: "net-misc/openssh" }
       - { package: "media-gfx/imagemagick" }
       # git need to be reinstalled with curl use flag
