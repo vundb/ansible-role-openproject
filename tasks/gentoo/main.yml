@@ -35,7 +35,6 @@
 
 - name: write memcache configuration
   become: yes
-  tags: [current]
   lineinfile: dest="/etc/conf.d/memcached" regexp="^{{ item.search }}" line="{{ item.replace }}" state="{{ item.state | default('present') }}"
   with_items:
     - { search: "LISTENON=", replace: "LISTENON=\"{{ openproject_memcache_config.listenon }}\"" }
