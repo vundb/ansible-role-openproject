@@ -13,8 +13,16 @@ openproject_mysql:
 # Use simple key value storage.
 #
 # Example
-#   openproject_config_production
+#   openproject_config_production:
 #     email_delivery_method: :smtp
 #     smtp_address: "smtp.example.com"
 #
 openproject_config_production: []
+
+
+#
+# Memcache Configuration
+#
+openproject_memcache_config:
+  listenon: 127.0.0.1
+  port: 11211

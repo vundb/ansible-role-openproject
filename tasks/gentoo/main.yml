@@ -31,6 +31,17 @@
       - { package: "www-apache/passenger" }
 
 
+# secure up memcache configuration
+
+- name: write memcache configuration
+  become: yes
+  tags: [current]
+  lineinfile: dest="/etc/conf.d/memcached" regexp="^{{ item.search }}" line="{{ item.replace }}" state="{{ item.state | default('present') }}"
+  with_items:
+    - { search: "LISTENON=", replace: "LISTENON=\"{{ openproject_memcache_config.listenon }}\"" }
+    - { search: "PORT=",     replace: "PORT=\"{{ openproject_memcache_config.port }}\"" }
+
+
 # ensure services are running
 
 - name: ensure memcache service is running
