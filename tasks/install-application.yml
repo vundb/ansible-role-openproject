@@ -13,6 +13,17 @@
       accept_hostkey=yes
       force=yes
 
+#
+# We need to delete all vendors before running bundle install.
+# This is required because system packages may be updated and vendors
+# has to be recompiled
+#
+
+- name: ensure vendor directory is absent
+  become: yes
+  become_user: "{{ openproject_user }}"
+  file: path="/home/openproject/application/vendor" state="absent"
+
 - name: command - gem install bundler
   become: yes
   become_user: "{{ openproject_user }}"
