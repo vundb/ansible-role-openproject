@@ -21,3 +21,7 @@
         minute="*/1"
         job="cd /home/openproject/application; ./bin/rake jobs:workoff"
         user="{{ openproject_user }}"
+
+- name: restart apache service
+  become: yes
+  service: name="apache2" state="restarted"
