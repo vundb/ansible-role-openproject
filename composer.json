@@ -11,12 +11,12 @@
   ],
   "require": {
     "composer/installers": "~1.0",
-    "vundb/ansible-role-portage": "1.0.*"
+    "vundb/ansible-role-portage": "1.*"
   },
   "extra": {
-    "installer-name": "openproject",
+    "installer-name": "vundb-openproject",
     "branch-alias": {
-      "dev-master": "0.x-dev"
+      "dev-master": "1.x-dev"
     }
   }
 }
