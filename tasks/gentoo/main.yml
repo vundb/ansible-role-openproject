@@ -2,7 +2,7 @@
 
 # install required packaages
 
-- include: ../../../portage/tasks/gentoo/main.yml
+- include: ../../../vundb-portage/tasks/gentoo/main.yml
   vars:
     portage_configuration:
       - section: "package.use"
